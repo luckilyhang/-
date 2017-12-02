@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.bootcss.com/jquery-mobile/1.4.4/jquery.mobile.css" rel="stylesheet">
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        .box{
+            width: 400px;
+            height: 300px;
+            margin:100px auto;
+            position: relative;
+            overflow: hidden;
+        }
+        span{
+            display: block;
+            width: 400px;
+            height: 40px;
+            background-color:red;
+            text-align: center ;
+            line-height: 40px;
+            position: absolute;
+            bottom:-40px;
+            right:0;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <img src="1.jpg" alt="">
+    <span></span>
+</div>
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.2.0/jquery.js"></script>
+<script src="js/bootstrap.js"></script>
+<script>
+//    $("span").hide();
+    $('.box').on('mouseenter',function(e){
+        var w = $(this).width(); // 得到盒子宽度
+        var h = $(this).height();// 得到盒子高度
+        var x = (e.pageX - this.offsetLeft - (w / 2)) * (w > h ? (h / w) : 1);
+        // 获取x值
+        var y = (e.pageY - this.offsetTop - (h / 2)) * (h > w ? (w / h) : 1);
+        // 获取y值
+
+        // direction的值为“0,1,2,3”分别对应着“上，右，下，左”
+        var direction = Math.round((((Math.atan2(y, x) * (180 / Math.PI)) + 180) / 90) + 3) % 4;
+        if(direction===0){
+           $("span").show().css({"bottom":40,"right":0,"height":0}).stop().animate({bottom:0,right:0,height:40},500);
+        }else if(direction===1){
+            $("span").show().css({"right":-400,"bottom":0,"height":40}).stop().animate({right:0,bottom:0},500);
+        }else if(direction===2){
+            $("span").show().css({"bottom":-40,"right":0,"height":40}).stop().animate({bottom:0,right:0},500);
+        }else if(direction===3){
+            $("span").show().css({"bottom":0,"right":400,"height":40}).stop().animate({right:0,bottom:0},500);
+        }
+    });
+  $('.box').on('mouseleave',function(e){
+        var w = $(this).width(); // 得到盒子宽度
+        var h = $(this).height();// 得到盒子高度
+        var x = (e.pageX - this.offsetLeft - (w / 2)) * (w > h ? (h / w) : 1);
+        // 获取x值
+        var y = (e.pageY - this.offsetTop - (h / 2)) * (h > w ? (w / h) : 1);
+        // 获取y值
+
+        // direction的值为“0,1,2,3”分别对应着“上，右，下，左”
+        var direction = Math.round((((Math.atan2(y, x) * (180 / Math.PI)) + 180) / 90) + 3) % 4;
+        if(direction===0){
+           $("span").show().css({bottom:0}).stop().animate({right:0,bottom:"40px","height":0},500);
+        }else if(direction===1){
+            $("span").show().stop().animate({right:"-400px",bottom:"0"},500);
+        }
+        else if(direction===2){
+           $("span").show().stop().animate({bottom:"-40px",right:0},500);
+        }else if(direction===3){
+            $("span").show().stop().animate({right:"400px",bottom:0,"display":"none"},500);
+        }
+    });
+
+</script>
+</html>
